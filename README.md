@@ -18,13 +18,14 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
 5. [UML Diagrams](#system-architecture)
 6. [Dependencies](#dependencies)
 7. [Tools](#tools-used)
-<!-- 3. Package hierarchy -->
 
 ## Introduction
   
-  An increased usage of Unmanned Aerial and Surface Vehicles (UAVs and USVs) has been witnessed for various autonomous aerial applications in recent years. A swarm of these unmanned autonomous vehicles can perform safe collision-free navigation by adjusting the positions of drones using controlled localization and formation. In this proposal, our team has focused on implementing one of the trending applications of swarm drones, which is to form different geometric shapes using a swarm of 20 or more drones.
+  Our team will be using ‘Kamikaze Drones’ as the project code name to help protect Acme’s secret product plans. The name means ‘Divine Wind’ in Japanese and is inspired from the ‘[Kamikaze swarm operation](https://www.youtube.com/watch?v=3d28APIfwSI)’ by company ‘STM’.
 
-  Simply put, a bunch of drones form geometric shapes such as a circle or rectangle midair autonomously without any collisions amongst themselves. In order to achieve this, state-of-art path-planning swarm algorithms will be deployed. The performance validation of this project will be done using the Gazebo simulation depicting a real-time demo of the application. Acme can then utilize this package in its 5-year robotics-based product roadmap.
+  In this proposal, our team has focused on implementing one of the trending applications of swarm drones, which is to form different geometric shapes using a swarm of 20 or more drones.
+
+  In order to achieve this, state-of-art path-planning swarm algorithms will be deployed. The performance validation of this project will be done using the Gazebo simulation depicting a real-time demo of the application. Acme can then utilize this package in its 5-year robotics-based product roadmap.
 
 
 ## Deliverables
@@ -41,9 +42,9 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
 
 ### Project proposal
 
-  - The project proposal document can be found [here](/assets/Swarm_Drones_Proposal.pdf).  
-  - The proposal video can be found [here](https://youtu.be/7sqIBtfbFjk).  
-  - The quadchart can be found [here](/assets/Quadchart_phase_0.pdf).  
+  - The project proposal document can be found [here](/assets/Kamikaze_Drones_Proposal.pdf).  
+  <!-- - The proposal video can be found [here](https://youtu.be/7sqIBtfbFjk).   -->
+  - The quadchart can be found [here](/assets/Quadchart_phase0.pdf).  
 
 <!-- ### Sample Output
 ![Sample Output](/results/sample_package_output.png)   -->
@@ -59,11 +60,11 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
   - Each sprint's notes and reviews have been documented [here](https://docs.google.com/document/d/1rGsBwGwRbpP7cR_gu-ueWbK_iysQTQdyqjFzTM7u1lA/edit?usp=sharing)
   
 ### System architecture
-- The class diagram can be found [here](/UML/development_phase_0/ClassDiagram.png).
+- The class diagram can be found [here](/UML/developemnt_phase_0/Class_Diagram.png).
 
 - The flow of our system is as follows:  
 
-![Activity Diagram](/UML/development_phase_0/ActivityDiagram.png)  
+![Activity Diagram](/UML/developemnt_phase_0/Activity_Diagram.png). 
 
 
 ### Dependencies  
@@ -85,7 +86,7 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
 | Running tests | Gtests | BSD 3-Clause "New" or "Revised" License |
 
 
-## Other Tools
-* ```ament_cmake```
+## ROS REPs
+* ```ros2_nav2```
 * ```rclcpp```
-* ```std_msgs```
+* ```move_base```
