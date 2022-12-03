@@ -37,14 +37,6 @@ jobs:
       - name: Install packages
         run: sudo apt install -y lcov && pip3 install --user cpp-coveralls
 
-      #Install OpenCV
-      - name: Install Dependencies
-        run: sudo pip install gdown && sudo chmod a+x install_dependencies.sh && ./install_dependencies.sh
-
-      #Download weight file
-      - name: Download weights
-        run: sudo chmod a+x download_weights.sh && ./download_weights.sh
-
       # Run CMake to setup compilation flags
       - name: Configure Coverage CMake 
         run: cmake -D COVERAGE=ON -D CMAKE_BUILD_TYPE=Debug -B ${{github.workspace}}/build 
