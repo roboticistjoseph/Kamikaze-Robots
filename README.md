@@ -1,7 +1,7 @@
 # Development of Swarm Drones for ACME Robotics
 A C++ Module for new robotics-based product of ACME Robotics using high-quality engineering practices for development of Multi-robots/ swarm actions using swarm algorithms with 20 or more drones simultaneously
 
-[![Build Status](https://github.com/z-Ash-z/Human_detection_and_tracking/actions/workflows/build_and_coveralls.yml/badge.svg)](https://github.com/z-Ash-z/Human_detection_and_tracking/actions/workflows/build_and_coveralls.yml)
+[![Build](https://github.com/Bhargav-Soothram/Kamikaze-Drones/actions/workflows/build_and_coveralls.yml/badge.svg)](https://github.com/Bhargav-Soothram/Kamikaze-Drones/actions/workflows/build_and_coveralls.yml)
 [![Coverage Status](https://coveralls.io/repos/github/Bhargav-Soothram/Kamikaze-Drones/badge.svg?branch=master)](https://coveralls.io/github/Bhargav-Soothram/Kamikaze-Drones?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
