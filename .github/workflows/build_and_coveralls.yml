@@ -1,0 +1,68 @@
+##############################################################################
+#
+# GitGub CI workflow syntax spec:
+#    https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+#
+# Coveralls example:
+#    https://github.com/marketplace/actions/coveralls-github-action
+#
+##############################################################################
+
+name: Build
+
+on:
+  # Triggered whenever push to the main branch
+  push:
+    branches: [ "main" ]
+
+  # Triggered whenever a pull request is created on main
+  pull_request:
+    branches: [ "main" ]
+    types: [opened]
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  build:
+    # Create a container of the latest Ubuntu, other values could be
+    # ubuntu-latest, ubuntu-22.04, etc.
+    runs-on: ubuntu-20.04
+    
+    steps:
+      # We want to use GitHub CI checkout version 3 for checking out the branch
+      - uses: actions/checkout@v3
+      
+      # Install some system pacakges
+      - name: Install packages
+        run: sudo apt install -y lcov && pip3 install --user cpp-coveralls
+
+      #Install OpenCV
+      - name: Install Dependencies
+        run: sudo pip install gdown && sudo chmod a+x install_dependencies.sh && ./install_dependencies.sh
+
+      #Download weight file
+      - name: Download weights
+        run: sudo chmod a+x download_weights.sh && ./download_weights.sh
+
+      # Run CMake to setup compilation flags
+      - name: Configure Coverage CMake 
+        run: cmake -D COVERAGE=ON -D CMAKE_BUILD_TYPE=Debug -B ${{github.workspace}}/build 
+      
+      # Compile and executables
+      - name: Build Coverage
+        working-directory: ${{github.workspace}}/build
+        run: make
+
+      # Run test suite and compute code coverage
+      - name: Run Test Coverage
+        working-directory: ${{github.workspace}}/build
+        run: make code_coverage
+      
+      # Upload coverage result to Coverage.io 
+      - name: Upload result to Coveralls.io
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ${{github.workspace}}/build/coverage.info.cleaned
+
