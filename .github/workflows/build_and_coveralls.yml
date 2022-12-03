@@ -13,11 +13,11 @@ name: Build
 on:
   # Triggered whenever push to the main branch
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
   # Triggered whenever a pull request is created on main
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     types: [opened]
 
   # Allow manual trigger
