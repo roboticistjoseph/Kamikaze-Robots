@@ -22,11 +22,11 @@ SpawnController::SpawnController(const std::string &node_name)
 void SpawnController::timer_callback() {
     // Logging the message in the terminal.
   RCLCPP_INFO(this->get_logger(), "Controlling the bots.");
-  bot_velocity_.linear.x = -0.5;
+  bot_velocity_.linear.x = -0.4;
   
   for (int i = 0; i < 20; i++) {
     if (i <= callback_counter_) {
-      bot_velocity_.angular.z = 0.1;
+      bot_velocity_.angular.z = 0.2;
     }
     else
     {
