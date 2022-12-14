@@ -15,14 +15,25 @@ SpawnController::SpawnController(const std::string &node_name)
     // publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(topic_name, 10);
 
     // Starting the publisher.
-  timer_publisher_ = this->create_wall_timer(std::chrono::milliseconds(100), std::bind(&SpawnController::timer_callback, this));
+  timer_publisher_ = this->create_wall_timer(std::chrono::milliseconds(1000), std::bind(&SpawnController::timer_callback, this));
+  callback_counter_ = 0;
 }
 
 void SpawnController::timer_callback() {
     // Logging the message in the terminal.
   RCLCPP_INFO(this->get_logger(), "Controlling the bots.");
-  bot_velocity_.linear.x = 0.1;
+  bot_velocity_.linear.x = -0.5;
+  
   for (int i = 0; i < 20; i++) {
+    if (i <= callback_counter_) {
+      bot_velocity_.angular.z = 0.1;
+    }
+    else
+    {
+      bot_velocity_.angular.z = 0.0;
+    }
     publishers_.at(i)->publish(bot_velocity_);
+    
   }
+  callback_counter_++;
 }

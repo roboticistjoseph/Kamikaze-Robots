@@ -15,6 +15,7 @@ class SpawnController : public rclcpp::Node {
 //   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;  //!< The pointer to the publisher.
   geometry_msgs::msg::Twist bot_velocity_;  //!< The calculated bot velocity.
   rclcpp::TimerBase::SharedPtr timer_publisher_;  //!< The pointer to the publisher callback.
+  int callback_counter_;
 
   /**
    * @brief The callback funciton 
