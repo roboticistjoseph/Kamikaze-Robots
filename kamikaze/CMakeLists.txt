@@ -8,7 +8,7 @@ endif()
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -19,15 +19,18 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rclpy REQUIRED)
+find_package(geometry_msgs REQUIRED)
+
+include_directories(include/kamikaze)
+
+# Adding the publisher executable
+add_executable(swarm_controller app/swarm_init.cpp src/spawn_controller.cpp)
+ament_target_dependencies(swarm_controller rclcpp geometry_msgs)
+install(TARGETS swarm_controller DESTINATION lib/${PROJECT_NAME})
+
 
 # Install launch
-install(
-  DIRECTORY
-    launch
-  DESTINATION
-    share/${PROJECT_NAME}/
-)
+# install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 
 
 if(BUILD_TESTING)
