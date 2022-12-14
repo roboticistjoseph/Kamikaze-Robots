@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro  name="box_bot_propeller" params="name parent incr origin_xyz origin_rpy">
+      
+      
+      <!-- PROELLER -->
+      <link name="${name}_propeller_top">
+        <inertial>
+          <mass value="0.2"/>
+          <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <xacro:cylinder_inertia mass="0.2" r="${r}" l="${l}" />
+        </inertial>
+        <collision name="link_right_wheel_collision">
+          <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+          <geometry>
+            <cylinder length="${l}" radius="${r + incr}"/>
+          </geometry>
+        </collision>
+        <visual>
+          <origin rpy="0 0 0" xyz="0 0.0 0.0" />
+          <geometry>
+            <mesh filename="package://box_bot_description/meshes/prop.stl" scale="1.0 1.0 1.0"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint name="top_propeller_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.0" />
+        <parent link="${parent}" />
+        <child link="${name}_propeller_top" />
+        <axis xyz="0 1 0" />
+        <limit effort="1000.0" velocity="100.0" />
+      </joint>
+
+    <transmission name="top_propeller_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="top_propeller_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="top_propeller_jointMotor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    </xacro:macro >
+
+</robot>

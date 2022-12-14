@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Caster Wheels-->
+    <xacro:macro  name="caster_wheel" params="parent caster_wheel_name origin_xyz radius legth">
+      <!-- CASTER FRONT-->
+      <link name="${caster_wheel_name}_yaw_link">
+        <inertial>
+            <mass value="0.001"/>
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <xacro:cylinder_inertia mass="0.001" r="${0.9 * radius/2.0}" l="${legth}" />
+          </inertial>
+          <collision name="link_right_wheel_collision">
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <geometry>
+              <cylinder length="${legth}" radius="${0.9 * radius/2.0}"/>
+            </geometry>
+          </collision>
+      </link>
+
+      <joint name="${caster_wheel_name}_yaw_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="${origin_xyz}" />
+        <parent link="${parent}" />
+        <child link="${caster_wheel_name}_yaw_link" />
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" velocity="100.0" />
+        <dynamics damping="0.0" friction="0.1"/>
+      </joint>
+
+      <transmission name="${caster_wheel_name}_yaw_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${caster_wheel_name}_yaw_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${caster_wheel_name}_yaw_jointMotor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+
+    <link name="${caster_wheel_name}_roll_link">
+        <inertial>
+            <mass value="0.001"/>
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <xacro:cylinder_inertia mass="0.001" r="${0.9 * radius/2.0}" l="${legth}" />
+          </inertial>
+          <collision name="link_right_wheel_collision">
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <geometry>
+              <cylinder length="${legth}" radius="${0.9 * radius/2.0}"/>
+            </geometry>
+          </collision>
+      </link>
+
+      <joint name="${caster_wheel_name}_roll_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <parent link="${caster_wheel_name}_yaw_link" />
+        <child link="${caster_wheel_name}_roll_link" />
+        <axis xyz="1 0 0" />
+        <limit effort="1000.0" velocity="100.0" />
+        <dynamics damping="0.0" friction="0.1"/>
+      </joint>
+
+      <transmission name="${caster_wheel_name}_roll_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${caster_wheel_name}_roll_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${caster_wheel_name}_roll_jointMotor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+
+      <link name="${caster_wheel_name}_pitch_link">
+        <inertial>
+          <mass value="0.001"/>
+          <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <xacro:sphere_inertia mass="0.001" r="${radius}"/>
+        </inertial>
+        <collision name="${caster_wheel_name}_collision">
+          <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </collision>
+        <visual name="${caster_wheel_name}_visual">
+          <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+          <geometry>
+            <sphere radius="${radius}"/>
+          </geometry>
+        </visual>
+      </link>
+
+      <joint name="${caster_wheel_name}_pitch_joint" type="continuous">
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <parent link="${caster_wheel_name}_roll_link" />
+        <child link="${caster_wheel_name}_pitch_link" />
+        <axis xyz="0 1 0" />
+        <limit effort="1000.0" velocity="100.0" />
+        <dynamics damping="0.0" friction="0.1"/>
+      </joint>
+
+    <transmission name="${caster_wheel_name}_pitch_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${caster_wheel_name}_pitch_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${caster_wheel_name}_pitch_jointMotor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <gazebo reference="${caster_wheel_name}_pitch_link">
+      <kp>1000000000000000000000000000.0</kp>
+      <kd>1000000000000000000000000000.0</kd>
+      <mu1>${mu1_wheel}</mu1>
+      <mu2>${mu2_wheel}</mu2>
+      <material>Gazebo/Green</material>
+    </gazebo>
+
+
+  </xacro:macro >
+
+</robot>
