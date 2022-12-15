@@ -59,7 +59,7 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
   Agile software development model will be used for the development process where tasks will be tracked using a backlog table. The software is designed in a Test-Driven Development fashion and implemented using Pair programming technique. The tasks will be outlined for every sprint and after each sprint, the roles of the pair-programming group will be interchanged.
 
 ## Development process
-  - Using the Software Engineering Practices, all design and development work was followed Agile Iterative Process (AIP) where product backlog, iteration backlog, and work log were maintained usign appropriate measure. The Sheet can be accessed [here](https://docs.google.com/spreadsheets/d/1fHZmI5XlFYrR_24ZgUXfHm7kWQuyqo2a178b-_H9M2g/edit?usp=sharing)
+  - Using the Software Engineering Practices, all design and development work was followed Agile Iterative Process (AIP) where product backlog, iteration backlog, and work log were maintained usign appropriate measure. The Sheet can be accessed [here](https://docs.google.com/spreadsheets/d/1BQCqN5Qy6YmZE76j3XB-w8Y3W8QGNNPGS1bdCdOAWbg/edit#gid=0)
   - Each sprint's notes and reviews have been documented [here](https://docs.google.com/document/d/1rGsBwGwRbpP7cR_gu-ueWbK_iysQTQdyqjFzTM7u1lA/edit?usp=sharing)
   
 ### System architecture
