@@ -2,7 +2,7 @@
 A C++ Module for new robotics-based product of ACME Robotics using high-quality engineering practices for development of Multi-robots/ swarm actions using swarm algorithms with 20 or more robots simultaneously to arrange themselves in various geometric formations.
 
 [![Build](https://github.com/roboticistjoseph/Kamikaze-Drones/actions/workflows/build_and_coveralls.yml/badge.svg)](https://github.com/roboticistjoseph/Kamikaze-Drones/actions/workflows/build_and_coveralls.yml)
-[![Coverage Status](https://coveralls.io/repos/github/Bhargav-Soothram/Kamikaze-Drones/badge.svg?branch=master)](https://coveralls.io/github/Bhargav-Soothram/Kamikaze-Drones?branch=master)
+[![codecov](https://codecov.io/gh/roboticistjoseph/Kamikaze-Robots/branch/master/graph/badge.svg?token=SNUGOUNGOF)](https://codecov.io/gh/roboticistjoseph/Kamikaze-Robots)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ---
