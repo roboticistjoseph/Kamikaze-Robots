@@ -13,7 +13,7 @@ name: Build
 on:
   # Triggered whenever push to the main branch
   push:
-    branches: [ "development_branch_phase2" ]
+    branches: [ "master" ]
 
   # Triggered whenever a pull request is created on main
   pull_request:
