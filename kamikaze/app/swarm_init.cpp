@@ -3,11 +3,11 @@
  * @author Aneesh Chodisetty (aneeshc@umd.edu)
  * @author Bhargav Kumar Soothram (bsoothra@umd.edu)
  * @author Joseph Pranadheer Reddy Katakam (jkatak@umd.edu)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-12-15
- * 
- * @copyright 
+ *
+ * @copyright
  *  // Copyright 2016 Open Source Robotics Foundation, Inc.
     //
     // Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@
     // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     // See the License for the specific language governing permissions and
     // limitations under the License.
-  */
+ */
 
 // include directory
 #include <spawn_controller.h>
@@ -31,12 +31,13 @@
 
 /**
  * @brief Main program to run the SpawnController
- * 
- * @param argc 
- * @param argv 
- * @return int 
+ *
+ * @param argc
+ * @param argv
+ * @return int
  */
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
   // Initializing the rclcpp
   rclcpp::init(argc, argv);
 

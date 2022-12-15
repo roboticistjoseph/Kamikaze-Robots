@@ -3,11 +3,11 @@
  * @author Aneesh Chodisetty (aneeshc@umd.edu)
  * @author Bhargav Kumar Soothram (bsoothra@umd.edu)
  * @author Joseph Pranadheer Reddy Katakam (jkatak@umd.edu)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-12-15
- * 
- * @copyright 
+ *
+ * @copyright
  *  // Copyright 2016 Open Source Robotics Foundation, Inc.
     //
     // Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,39 +21,52 @@
     // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     // See the License for the specific language governing permissions and
     // limitations under the License.
-  */
+ */
 
 // include header file
 #include <spawn_controller.h>
 
-SpawnController::SpawnController(const std::string &node_name)
-    : Node(node_name) {
-    std::string topic_name;
-    // int iterator{0};
-    for (int i = 0; i < 20; i++) {
-        topic_name = "/box_bot" + std::to_string(i) + "/cmd_vel";
-        std::cout << topic_name;
-        publishers_[i] = this->create_publisher<geometry_msgs::msg::Twist>(topic_name, 10);
-        // iterator++;
-    }
-    // topic_name = "/box_bot" + std::to_string(0) + "/cmd_vel";
-    // publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(topic_name, 10);
+SpawnController::SpawnController(const std::string& node_name)
+  : Node(node_name)
+{
+  std::string topic_name;
 
-    // Starting the publisher.
+  // int iterator{0};
+  for (int i = 0; i < 20; i++)
+  {
+    topic_name = "/box_bot" + std::to_string(i) + "/cmd_vel";
+    std::cout << topic_name;
+    publishers_[i] = this->create_publisher<geometry_msgs::msg::Twist>(topic_name,
+                                                                       10);
+
+    // iterator++;
+  }
+
+  // topic_name = "/box_bot" + std::to_string(0) + "/cmd_vel";
+  // publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(topic_name,
+  // 10);
+
+  // Starting the publisher.
   timer_publisher_ = this->create_wall_timer(std::chrono::milliseconds(100),
-                        std::bind(&SpawnController::timer_callback, this));
+                                             std::bind(&SpawnController::
+                                                       timer_callback, this));
   callback_counter_ = 0;
 }
 
-void SpawnController::timer_callback() {
-    // Logging the message in the terminal.
+void SpawnController::timer_callback()
+{
+  // Logging the message in the terminal.
   RCLCPP_INFO(this->get_logger(), "Controlling the bots.");
   bot_velocity_.linear.x = -0.1;
 
-  for (int i = 0; i < 20; i++) {
-    if ((i * 5)  <= callback_counter_) {
+  for (int i = 0; i < 20; i++)
+  {
+    if ((i * 5)  <= callback_counter_)
+    {
       bot_velocity_.angular.z = 0.2;
-    } else {
+    }
+    else
+    {
       bot_velocity_.angular.z = 0.0;
     }
     publishers_.at(i)->publish(bot_velocity_);
