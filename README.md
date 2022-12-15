@@ -22,10 +22,11 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
 7. [Run the Software](#how-to-build-and-run-demo)
 8. [Code Coverage](#how-to-build-for-test-coverage)
 9. [Unit Testing](#how-to-run-unit-tests)
+10. [Code Analysis](#code-analysis)
 
 ## Introduction
   
-  Our team will be using ‘Kamikaze Drones’ as the project code name to help protect Acme’s secret product plans. The name means ‘Divine Wind’ in Japanese and is inspired from the ‘[Kamikaze swarm operation](https://www.youtube.com/watch?v=3d28APIfwSI)’ by company ‘STM’.
+  Our team will be using ‘Kamikaze Robots' as the project code name to help protect Acme’s secret product plans. The name means ‘Divine Wind’ in Japanese and is inspired from the ‘[Kamikaze swarm operation](https://www.youtube.com/watch?v=3d28APIfwSI)’ by company ‘STM’.
 
   In this proposal, our team has focused on implementing one of the trending applications of swarm drones, which is to form different geometric shapes using a swarm of 20 or more drones.
 
@@ -44,20 +45,25 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
   8. Static code analysis with cppcheck
   9. Google C++ Style guide with cpplint validation
 
+
 ### Project proposal
 
   - The project proposal document can be found [here](/assets/Kamikaze_Drones_Proposal.pdf).  
-  <!-- - The proposal video can be found [here](https://youtu.be/7sqIBtfbFjk).   -->
+
   - The quadchart can be found [here](/assets/Quadchart_phase0.pdf).  
 
-<!-- ### Sample Output
-![Sample Output](/results/sample_package_output.png)   -->
+### Project Output
+- Final Presentation resource: [link](/assets/Final_Presentation.pdf)
+- ```Box Bot``` ![Box Bot](/assets/demo/swarm.jpg)
+- ```Demonstration``` ![Sample Demo](/assets/demo/demo.gif)  
 
 ## System Design
 
 ### Development methodology
 
-  Agile software development model will be used for the development process where tasks will be tracked using a backlog table. The software is designed in a Test-Driven Development fashion and implemented using Pair programming technique. The tasks will be outlined for every sprint and after each sprint, the roles of the pair-programming group will be interchanged.
+  - Agile software development model will be used for the development process where tasks will be tracked using a backlog table.
+  - The software is designed in a Test-Driven Development fashion and implemented using Pair programming technique.
+  - The tasks will be outlined for every sprint and after each sprint, the roles of the pair-programming group will be interchanged.
 
 ## Development process
   - Using the Software Engineering Practices, all design and development work was followed Agile Iterative Process (AIP) where product backlog, iteration backlog, and work log were maintained usign appropriate measure. The Sheet can be accessed [here](https://docs.google.com/spreadsheets/d/1BQCqN5Qy6YmZE76j3XB-w8Y3W8QGNNPGS1bdCdOAWbg/edit#gid=0)
@@ -210,3 +216,17 @@ cd kamikaze/
 cppcheck --enable=all --std=c++17 ./src/*.cpp ./include/kamikaze/*.hpp --suppress=missingIncludeSystem --suppress=unmatchedSuppression --suppress=unusedFunction --suppress=missingInclude --suppress=useInitializationList > ../results/cppcheck.txt
 ```
 The results of running ```cppcheck``` can be found in ```/results/cppcheck.txt```.
+
+## Challenges
+- No existing ROS2 repositories were forund to use as a reference.
+- Compatibility issues were encountered with different ROS versions and packages.
+- As ROS2 Humble is still in development mode, our team ran into various issues when using it. Hence, we had to switch to it's predecessor ROS2 foxy.
+- Took time to understand developing a launch file to spawn multiple robots. Later, faced difficulties spawning 20 robots in a single gazebo environment.
+- Factoring in the complexity of model file to be spawned, which greatly affects the simulation time.
+- Coordinating each robot's location while planing each robot's goal.
+- As our team is new to using rostests, Github 'codecov', Github CI, time was taken to understand each step and implement them.
+- We ran into troubles maintaining 'version-control', hence we chose to keep the development branches to save progress after merging it to the master branch.
+
+## License
+
+This project is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0) and can be found in the `LICENSE` file.
