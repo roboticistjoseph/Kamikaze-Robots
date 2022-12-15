@@ -1,0 +1,109 @@
+##############################################################################
+#
+# GitGub CI workflow syntax spec:
+#    https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+#
+# Coveralls example:
+#    https://github.com/marketplace/actions/coveralls-github-action
+#
+##############################################################################
+
+name: Build
+
+on:
+  # Triggered whenever push to the main branch
+  push:
+    branches: [ "development_branch_phase2" ]
+
+  # Triggered whenever a pull request is created on main
+  pull_request:
+    branches: [ "master" ]
+    types: [opened]
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  build:
+    # Create a container of the latest Ubuntu, other values could be
+    # ubuntu-latest, ubuntu-22.04, etc.
+    runs-on: ubuntu-20.04
+    
+    steps:
+      # We want to use GitHub CI checkout version 3 to check out our branches
+      - name: Checking out
+        uses: actions/checkout@v3
+
+      - name: Git install and colcon extensions
+        run : |
+          sudo apt-get install git
+          sudo apt update && sudo apt install locales
+          sudo locale-gen en_US en_US.UTF-8
+          sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+          export LANG=en_US.UTF-8
+          locale
+          sudo apt install software-properties-common
+          sudo add-apt-repository universe
+          sudo apt update && sudo apt install curl
+          sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+          sudo apt update
+          sudo apt install python3-colcon-common-extensions
+          sudo apt install -y lcov
+
+      - name: Install ROS Foxy Packages
+        run: |
+          sudo apt update
+          sudo apt install ros-foxy-desktop python3-argcomplete
+          sudo apt install ros-dev-tools
+
+      # - name: CV Bridge
+      #   run: |
+      #     sudo apt-get install ros-foxy-cv-bridge
+      #     sudo apt-get install ros-foxy-vision-opencv
+
+      - name: ROS Dep
+        run: |
+          sudo rosdep init
+          rosdep update
+          rosdep install kamikaze/src -y --ignore-src
+      
+      # Install Gazebo ROS and other dependencies
+      - name: CMake Dependencies for the package
+        run: |
+          sudo apt install ros-foxy-gazebo-ros-pkgs
+      # Build for test coverage
+      - name: Configure CMake flags and build exectables
+        run: |
+          source /opt/ros/foxy/setup.bash
+          colcon build --cmake-args -DCOVERAGE=1 --packages-select kamikaze
+          cat log/latest_build/kamikaze/stdout_stderr.log
+          find build/kamikaze/ | grep -E 'gcno' # catch error -- exepct to see .gcno files
+      
+      # Run unit test and also check c++ code (and others) for style and static coding errors
+      - name: Run unit test and check code error
+        run: |
+          source /opt/ros/foxy/setup.bash
+          colcon test --packages-select kamikaze
+          cat log/latest_test/kamikaze/stdout_stderr.log
+          find build/kamikaze/ | grep -E 'gcda' # catch error -- expect to see .gcda files
+          colcon test-result --test-result-base build/kamikaze/ # catch error
+      
+      # Generate code coverage test report
+      - name: Generate test coverage report
+        run: |
+          source install/setup.bash
+          ros2 run kamikaze generate_coverage_report.bash
+
+      # Upload coverage result to CodeCov
+      - name: Upload coverage result to CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ${{github.workspace}}/install/kamikaze/lib/kamikaze/coverage_cleaned.info
+          # flags: unittests # optional
+          # directory: ${{github.workspace}}/install/
+          # name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
+
