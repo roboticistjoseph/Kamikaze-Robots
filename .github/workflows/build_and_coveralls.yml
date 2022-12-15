@@ -62,11 +62,11 @@ jobs:
       #     sudo apt-get install ros-foxy-cv-bridge
       #     sudo apt-get install ros-foxy-vision-opencv
 
-      - name: ROS Dep
-        run: |
-          sudo rosdep init
-          rosdep update
-          rosdep install ${{github.workspace}}/kamikaze/src -y --ignore-src
+      # - name: ROS Dep
+      #   run: |
+      #     sudo rosdep init
+      #     rosdep update
+      #     rosdep install /src -y --ignore-src
       
       # Install Gazebo ROS and other dependencies
       - name: CMake Dependencies for the package
