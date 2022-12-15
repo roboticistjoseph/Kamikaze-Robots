@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Wheels-->
+    <xacro:macro  name="link_wheel" params="name r l incr">
+      <link name="${name}">
+          <inertial>
+            <mass value="0.2"/>
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <xacro:cylinder_inertia mass="0.2" r="${r}" l="${l}" />
+          </inertial>
+          <collision name="link_right_wheel_collision">
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <geometry>
+              <cylinder length="${l}" radius="${r + incr}"/>
+            </geometry>
+          </collision>
+          <visual name="link_right_wheel_visual">
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <geometry>
+              <cylinder length="${l}" radius="${r + incr}"/>
+            </geometry>
+          </visual>
+      </link>
+  </xacro:macro >
+
+  <xacro:macro  name="joint_wheel" params="name parent child origin_xyz">
+    <joint name="${name}" type="continuous">
+      <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+      <child link="${child}"/>
+      <parent link="${parent}"/>
+      <axis rpy="0 0 0" xyz="0 1 0"/>
+      <limit effort="10000" velocity="1000"/>
+      <joint_properties damping="1.0" friction="1.0"/>
+    </joint>
+  </xacro:macro >
+
+
+</robot>
