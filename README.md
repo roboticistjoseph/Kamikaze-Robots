@@ -19,8 +19,9 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
 4. [Development Process](#system-design)
 5. [UML Diagrams](#system-architecture)
 6. [Dependencies and Tools](#dependencies)
-7. [Run the Software](#clone-build-and-run-the-simulation)
-8. [Developer Section](#developer-section)
+7. [Run the Software](#how-to-build-and-run-demo)
+8. [Code Coverage](#how-to-build-for-test-coverage)
+9. [Unit Testing](#how-to-run-unit-tests)
 
 ## Introduction
   
@@ -89,12 +90,7 @@ A C++ Module for new robotics-based product of ACME Robotics using high-quality 
 | Running tests | Gtests | BSD 3-Clause "New" or "Revised" License |
 
 
-## ROS REPs
-* ```ros2_nav2```
-* ```rclcpp```
-* ```move_base```
-
-## Clone, Build and Run the Simulation
+## How to build and run Demo
 
 ### Source
 ```
@@ -111,9 +107,9 @@ git clone https://github.com/roboticistjoseph/Kamikaze-Robots.git
 ```
 # fresh build of packages
 cd Kamikaze-Robots/
-colcon build --packages-select box_bot_description/
-colcon build --packages-select box_bot_gazebo/
-colcon build --packages-select kamikaze/
+colcon build --packages-select box_bot_description
+colcon build --packages-select box_bot_gazebo
+colcon build --packages-select kamikaze
 ```
 
 ### Removing previous builds (*Optional*)
@@ -121,9 +117,9 @@ If build fails, re-run the above build commands after following the one's below.
 ```
 cd ~/Kamikaze-Robots/
 # remove any existing build files
-rm -rf build/box_bot_description/
-rm -rf build/box_bot_gazebo/
-rm -rf build/kamikaze/
+rm -rf build/box_bot_description
+rm -rf build/box_bot_gazebo
+rm -rf build/kamikaze
 ```
 
 ### Run the Simulation
@@ -140,17 +136,16 @@ ros2 launch box_bot_gazebo multi_box_bot_launch.py
 source install/local_setup.bash
 
 # Control the formation of spawned Bots
-ros2 launch kamikaze swarm_controller
+ros2 run kamikaze swarm_controller
 ```
 
-# Developer Section
-## Build Test Coverage
+## How to build for Test Coverage
 ```
 cd ~/Kamikaze-Robots/
 # remove any existing build files
-rm -rf build/box_bot_description/
-rm -rf build/box_bot_gazebo/
-rm -rf build/kamikaze/
+rm -rf build/box_bot_description
+rm -rf build/box_bot_gazebo
+rm -rf build/kamikaze
 
 # build with coverage
 colcon build --cmake-args -DCOVERAGE=1 --packages-select box_bot_description
@@ -161,7 +156,7 @@ colcon build --cmake-args -DCOVERAGE=1 --packages-select kamikaze
 cat log/latest_build/kamikaze/stdout_stderr.log
 ```
 
-### Run Tests
+### How to run Unit Tests
 - In a new terminal, run the follwoing commands to Test the functionality of the cloned software.
 ```
 cd ~/Kamikaze-Robots/
@@ -169,19 +164,53 @@ source install/setup.bash
 colcon test --packages-select kamikaze
 cat log/latest_test/kamikaze/stdout_stderr.log
 ```
+Output should be:
+<pre>1: [==========] Running 1 test from 1 test case.
+1: [----------] Global test environment set-up.
+1: [----------] 1 test from KamikazeTest
+1: [ RUN      ] KamikazeTest.BasicTest
+1: [WARN] [1671132175.805364740] [basic_test]: New test started.
+1: First Test.
+1: [       OK ] KamikazeTest.BasicTest (12 ms)
+1: [----------] 1 test from KamikazeTest (12 ms total)
+1: 
+1: [----------] Global test environment tear-down
+1: [==========] 1 test from 1 test case ran. (12 ms total)
+1: [  PASSED  ] 1 test.
+1: Testing Complete.
+1: -- run_test.py: return code 0
+1: -- run_test.py: inject classname prefix into gtest result file &apos;/home/joseph/ros2_ws2/src/Kamikaze-Robots/build/kamikaze/test_results/kamikaze/kamikaze_test.gtest.xml&apos;
+1: -- run_test.py: verify result file &apos;/home/joseph/ros2_ws2/src/Kamikaze-Robots/build/kamikaze/test_results/kamikaze/kamikaze_test.gtest.xml&apos;
+1/1 Test #1: kamikaze_test ....................   Passed    0.10 sec
+
+<font color="#4E9A06">100% tests passed</font>, 0 tests failed out of 1
+
+Label Time Summary:
+gtest    =   0.10 sec*proc (1 test)
+
+Total Test time (real) =   0.10 sec
+</pre>
+
+## Generate Coverage report
+```
+source install/setup.bash
+ros2 run kamikaze generate_coverage_report.bash
+```
 
 ## Code Analysis
-Running 'cpplint' and 'cppcheck' to check for coding style and detect bugs.
+Running 'cpplint' and 'cppcheck' to check for coding style and detect bugs. (Navigate to root of this cloned repo each time.)
 ### cpplint
-Change to the root directory of the package, ```/TurtleBot3-Roomba```, and run:
+Change to the root directory of the package, ```/Kamikaze-Robots```, and run:
 ```
-cpplint --filter=-build/c++11,+build/c++17,-build/namespaces,-build/include_order ./src/*.cpp ./include/*.hpp > ./results/cpplint.txt
+cd kamikaze/
+cpplint --filter=-build/c++11,+build/c++17,-build/namespaces,-build/include_order ./src/*.cpp ./include/kamikaze/*.hpp > ../results/cpplint.txt
 ```
 The results of running ```cpplint``` can be found in ```/results/cpplint.txt```.
 
 ### cppcheck
-Change to the root directory of the package, ```/TurtleBot3-Roomba```, and run:
+Change to the root directory of the package, ```/Kamikaze-Robots```, and run:
 ```
-cppcheck --enable=all --std=c++17 ./src/*.cpp ./include/*.hpp --suppress=missingIncludeSystem --suppress=unmatchedSuppression --suppress=unusedFunction --suppress=missingInclude --suppress=useInitializationList > results/cppcheck.txt
+cd kamikaze/
+cppcheck --enable=all --std=c++17 ./src/*.cpp ./include/kamikaze/*.hpp --suppress=missingIncludeSystem --suppress=unmatchedSuppression --suppress=unusedFunction --suppress=missingInclude --suppress=useInitializationList > ../results/cppcheck.txt
 ```
 The results of running ```cppcheck``` can be found in ```/results/cppcheck.txt```.
