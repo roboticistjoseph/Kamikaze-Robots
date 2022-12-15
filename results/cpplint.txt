@@ -1,0 +1,2 @@
+Done processing ./include/kamikaze/spawn_controller.hpp
+Done processing ./src/spawn_controller.cpp
