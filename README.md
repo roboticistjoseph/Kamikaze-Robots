@@ -139,19 +139,6 @@ source install/local_setup.bash
 ros2 run kamikaze swarm_controller
 ```
 
-## How to build for Test Coverage
-```
-cd ~/Kamikaze-Robots/
-# remove any existing build files
-rm -rf build/kamikaze
-
-# build with coverage
-colcon build --cmake-args -DCOVERAGE=1 --packages-select kamikaze
-
-# to check log (example)
-cat log/latest_build/kamikaze/stdout_stderr.log
-```
-
 ### How to run Unit Tests
 - In a new terminal, run the follwoing commands to Test the functionality of the cloned software.
 ```
@@ -186,6 +173,19 @@ gtest    =   0.10 sec*proc (1 test)
 
 Total Test time (real) =   0.10 sec
 </pre>
+
+## How to build for Test Coverage
+```
+cd ~/Kamikaze-Robots/
+# remove any existing build files
+rm -rf build/kamikaze
+
+# build with coverage
+colcon build --cmake-args -DCOVERAGE=1 --packages-select kamikaze
+
+# to check log (example)
+cat log/latest_build/kamikaze/stdout_stderr.log
+```
 
 ## Generate Coverage report
 ```
