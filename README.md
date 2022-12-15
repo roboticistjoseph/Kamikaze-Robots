@@ -143,13 +143,9 @@ ros2 run kamikaze swarm_controller
 ```
 cd ~/Kamikaze-Robots/
 # remove any existing build files
-rm -rf build/box_bot_description
-rm -rf build/box_bot_gazebo
 rm -rf build/kamikaze
 
 # build with coverage
-colcon build --cmake-args -DCOVERAGE=1 --packages-select box_bot_description
-colcon build --cmake-args -DCOVERAGE=1 --packages-select box_bot_gazebo
 colcon build --cmake-args -DCOVERAGE=1 --packages-select kamikaze
 
 # to check log (example)
