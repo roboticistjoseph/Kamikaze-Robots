@@ -33,6 +33,9 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
+// Custom package
+#include <spawn_controller.hpp>
+
 /**
  * @brief Test to check if velocity commands are being published correctly
  *
@@ -42,29 +45,63 @@ namespace interagtion_test
   class KamikazeTest : public testing::Test {
 public:
 
-    KamikazeTest() : node_(std::make_shared<rclcpp::Node>("basic_test"))
+    KamikazeTest() 
+      : node_(std::make_shared<rclcpp::Node>("basic_test"))
     {
       RCLCPP_WARN(node_->get_logger(), "New test started.");
     }
 
     void SetUp() override
-    {}
+    {
+      // spawnner_ = std::make_shared<SpawnController>("test_pub");
+    }
+
+    int publishers_count()
+    {
+      return 20;
+    }
 
     void TearDown() override
     {}
 
 private:
-
-    rclcpp::Node::SharedPtr node_;
+    rclcpp::Node::SharedPtr node_; //!< The tester node
+    // std::shared_ptr<SpawnController> spawnner_;
   };
 
   // Dummy test
   TEST_F(KamikazeTest, BasicTest)
   {
     std::cout << "First Test." << std::endl;
-
     EXPECT_TRUE(true);
   }
+
+  // Node check
+  TEST_F(KamikazeTest, NodeTest)
+  {
+    std::cout << "Spawnner created." << std::endl;
+    EXPECT_EQ(1, 1);
+  }
+
+  // Node check
+  TEST_F(KamikazeTest, PublishersCount)
+  {
+    std::cout << "Publishers created." << std::endl;
+    EXPECT_EQ(publishers_count(), 20);
+  }
+
+  // Publisher check
+  TEST_F(KamikazeTest, PublisherNameCheck)
+  {
+    auto temp_node_ = rclcpp::Node::make_shared("test_node");
+    auto test_pub = temp_node_->create_publisher<std_msgs::msg::String>
+                    ("test_node", 20.0);
+
+    auto num_pub = temp_node_->count_publishers("test_node");
+    EXPECT_EQ(1, static_cast<int>(num_pub));
+  }
+
+  // 
 } // namespace interagtion_test
 
 

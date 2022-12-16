@@ -24,7 +24,7 @@
  */
 
 // include directory
-#include <spawn_controller.h>
+#include <spawn_controller.hpp>
 
 // include standard libraries
 #include <memory>

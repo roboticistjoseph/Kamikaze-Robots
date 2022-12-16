@@ -24,7 +24,7 @@
  */
 
 // include header file
-#include <spawn_controller.h>
+#include <spawn_controller.hpp>
 
 SpawnController::SpawnController(const std::string& node_name)
   : Node(node_name) {
@@ -36,14 +36,8 @@ SpawnController::SpawnController(const std::string& node_name)
     std::cout << topic_name;
     publishers_[i] = this->create_publisher
                   <geometry_msgs::msg::Twist>(topic_name, 10);
-    // iterator++;
   }
-
-  // topic_name = "/box_bot" + std::to_string(0) + "/cmd_vel";
-  // publisher_ = this->create_publisher<geometry_msgs::msg::Twist>(topic_name,
-  // 10);
-
-  // Starting the publisher.
+  
   timer_publisher_ = this->create_wall_timer(std::chrono::milliseconds(100),
                                              std::bind(&SpawnController::
                                                        timer_callback, this));
