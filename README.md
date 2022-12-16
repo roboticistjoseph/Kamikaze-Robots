@@ -187,7 +187,7 @@ cd ~/Kamikaze-Robots/
 rm -rf build/kamikaze
 
 # build with coverage
-colcon build --cmake-args -DCOVERAGE=1 --packages-select kamikaze
+colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="--coverage" --packages-select kamikaze
 
 # to check log (example)
 cat log/latest_build/kamikaze/stdout_stderr.log
